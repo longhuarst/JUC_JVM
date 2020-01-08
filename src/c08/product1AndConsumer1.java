@@ -4,6 +4,18 @@ package c08;
 * 生产一个 消费一个 交替10次
 * */
 
+ /* <p>
+* As in the one argument version, interrupts and spurious wakeups are
+     * possible, and this method should always be used in a loop:
+     * <pre>
+     synchronized (obj) {
+         while (&lt;condition does not hold&gt;)
+             obj.wait();
+         ... // Perform action appropriate to condition
+     }
+ </pre>
+*/
+
 
 public class product1AndConsumer1 {
 
@@ -11,7 +23,7 @@ public class product1AndConsumer1 {
 
 
     public synchronized void decrease() throws Exception{
-        if (number != 1){
+        while (number != 1){    //多线程判断不能用if 必须用while  防止虚假唤醒
             this.wait();
         }
 
@@ -23,7 +35,7 @@ public class product1AndConsumer1 {
     }
 
     public synchronized void increase() throws Exception{
-        if (number != 0){
+        while (number != 0){    //多线程判断不能用if 必须用while  防止虚假唤醒
             this.wait();
         }
 
